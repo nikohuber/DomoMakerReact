@@ -1,10 +1,8 @@
 const models = require('../models');
 
-const { Account } = models;
+const Account = models;
 
 const loginPage = (req, res) => res.render('login');
-
-const signupPage = (req, res) => res.render('signup');
 
 const logout = (req, res) => {
   req.session.destroy();
@@ -33,6 +31,8 @@ const signup = async (req, res) => {
   const pass = `${req.body.pass}`;
   const pass2 = `${req.body.pass2}`;
 
+  console.log("ee");
+
   if (!username || !pass || !pass2) {
     return res.status(400).json({ error: 'All fields are required!' });
   }
@@ -58,7 +58,6 @@ const signup = async (req, res) => {
 
 module.exports = {
   loginPage,
-  signupPage,
   logout,
   login,
   signup,

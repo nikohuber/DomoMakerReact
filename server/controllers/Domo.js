@@ -1,6 +1,6 @@
 const models = require('../models');
 
-const Domo = models.Domo;
+const { Domo } = models;
 
 const makeDomo = async (req, res) => {
   if (!req.body.name || !req.body.age) {
