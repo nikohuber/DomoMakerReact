@@ -14,8 +14,8 @@ const handleDomo = (e, onDomoAdded) => {
         helper.handleError('All fields are required');
         return false;
     }
-
     helper.sendPost(e.target.action, {name, age}, onDomoAdded);
+    //console.log("sent!");
     return false;
 }
 
@@ -29,17 +29,17 @@ const DomoForm = (props) => {
             className = "domoForm"
         >
             <label htmlFor="name">Name: </label>
-            <input id = "domoName" type = "text" name = "name" placeholder = "Domo" />
+            <input id = "domoName" type = "text" name = "name" placeholder = "Domo Name" />
             <label htmlFor = "age">Age: </label>
-            <input id = "domoAge" type = "number" name = "age" min = "0"/>
+            <input id = "domoAge" type = "number" min = "0" name = "age" />
             <input className = "makeDomoSubmit" type = "submit" value = "Make Domo"/>
         </form>
-    )
-}
+    );
+};
 
 const DomoList = (props) => {
     const [domos, setDomos] = useState(props.domos);
-    
+    console.log(domos);
     useEffect(() => {
         const loadDomosFromServer = async () => {
             const response = await fetch('/getDomos');
@@ -86,8 +86,8 @@ const App = () => {
                 <DomoList domos = {[]} reloadDomos = {reloadDomos} />
             </div>
         </div>
-    )
-}
+    );
+};
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
