@@ -48,10 +48,14 @@ nav:nth-child(1) {
 }
 
 .domoForm {
+    flex-wrap: wrap;
+    flex-direction: row;
     border: 2px solid #338acc;
-    height: 35px;
-    width: 700px;
+    display: flex;
+    align-items: center;
     margin-top:0px;
+    margin-bottom: 10px;
+    padding-left: 10px;
     padding-top:10px;
     background-color: #55acee;
     border-bottom-right-radius: 4px;
@@ -59,19 +63,23 @@ nav:nth-child(1) {
 }
 
 .domoForm label {
+    
     display: inline-block;
     width: 75px;
     margin-left: 10px;
     font-size: 1.2em;
+    margin: 15px 10px;
     float: left;
     color: white;
 }
 
 .domoForm input[type=text] {
+    margin: 15px 10px;
     float:left;
 }
 
 .makeDomoSubmit {
+    margin: 15px 10px;
     transition: background-color 0.4s ease;
     display: inline;
     width: 90px;
@@ -92,7 +100,7 @@ nav:nth-child(1) {
 
 .mainForm {
     height: 300px;
-    width: 350px;
+    width: 550px;
     margin: 0 auto;
     padding-top: 350px;
     font-size: 1.2em;
@@ -183,33 +191,35 @@ nav:nth-child(1) {
 
 #domo {
     z-index: 225;
-    margin-top: -20px;
-    margin-left: 135px;
-    height: 450px;
-    width: 300px;
+
     -ms-transform: rotate(330deg);
     -webkit-transform: rotate(330deg); 
     transform: rotate(330deg);
 }
 
 #domos {
-    width: 40%;
-    min-width: 400px;
-    border: 2px solid #55acee;
+    display:flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 4px;
     margin: 0 auto;
     margin-top: 100px;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .domo {
-    width: 95%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
     margin: 0 auto;
-    margin-top: 2px;
+    margin-top: 5px;
     margin-bottom: 2px;
-    border: 2px solid #55acee;
+    border: 2px solid #338acc;;
     border-radius: 4px;
     background-color: #55acee;
-    padding: 10px;
+    padding: 20px;
     min-height:60px;
     overflow: hidden;
 }
@@ -232,7 +242,6 @@ img.domoFace {
 }
 
 h3.emptyDomo {
-    width: 400px;
     font-size: 1.5em;
     margin: 0 auto;
     text-align: center;
@@ -253,6 +262,23 @@ h3.domoAge {
     width: 100px;
     font-weight: bold;
     padding-right: 40px;
+    font-size: 1.5em;
+}
+
+h3.domoAttr {
+    float:right;
+    text-align: left;
+    width: 200px;
+    font-weight: bold;
+    font-size: 1.5em;
+    padding-right: 25px;
+}
+
+.domoId{
+    float:right;
+    text-align: left;
+    width: 100px;
+    font-weight: bold;
     font-size: 1.5em;
 }
 

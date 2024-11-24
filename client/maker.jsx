@@ -9,14 +9,36 @@ const handleDomo = (e, onDomoAdded) => {
 
     const name = e.target.querySelector('#domoName').value;
     const age = e.target.querySelector('#domoAge').value;
+    const attr = e.target.querySelector('#domoAttr').value;
 
-    if(!name || !age){
+    if(!name || !age || !attr){
         helper.handleError('All fields are required');
         return false;
     }
-    helper.sendPost(e.target.action, {name, age}, onDomoAdded);
+    helper.sendPost(e.target.action, {name, age, attr}, e.target.method, onDomoAdded);
     //console.log("sent!");
     return false;
+}
+
+const deleteDomo = (e, onDomoDelete) => {
+    const id = e.target.value;
+    helper.sendPost("/maker", {id}, 'DELETE', onDomoDelete);
+    return false;
+}
+
+const sortDomos = (domos, type) => {
+
+    let tempDomos = domos.sort(function (a,b){
+        if(a[type] < b[type]){
+            return -1;
+        }
+        if(a[type] > b[type]) {
+            return 1;
+        }
+        return 0;
+    });
+
+    return tempDomos;
 }
 
 const DomoForm = (props) => {
@@ -32,6 +54,8 @@ const DomoForm = (props) => {
             <input id = "domoName" type = "text" name = "name" placeholder = "Domo Name" />
             <label htmlFor = "age">Age: </label>
             <input id = "domoAge" type = "number" min = "0" name = "age" />
+            <label htmlFor = "attr">Attribute: </label>
+            <input id = "domoAttr" type = "text" name = "attr" />
             <input className = "makeDomoSubmit" type = "submit" value = "Make Domo"/>
         </form>
     );
@@ -39,15 +63,23 @@ const DomoForm = (props) => {
 
 const DomoList = (props) => {
     const [domos, setDomos] = useState(props.domos);
-    console.log(domos);
+    //console.log(domos);
     useEffect(() => {
         const loadDomosFromServer = async () => {
             const response = await fetch('/getDomos');
             const data = await response.json();
+            
             setDomos(data.domos);
         };
         loadDomosFromServer();
+
     }, [props.reloadDomos]);
+
+    const changeFilter = (type) => {
+        setDomos(sortDomos(domos, type));
+        //console.log(domos);
+        //props.triggerReload;
+    }
 
     if(domos.length === 0){
         return (
@@ -57,19 +89,31 @@ const DomoList = (props) => {
         );
     }
 
-    const domoNodes = domos.map(domo => {
+    let domoNodes = domos.map(domo => {
         return (
             <div key = {domo.id} className = "domo">
                 <img src = "/assets/img/domoface.jpeg" alt = "domo face" className = "domoFace" />
                 <h3 className = "domoName">Name: {domo.name}</h3>
                 <h3 className = "domoAge"> Age: {domo.age}</h3>
+                <h3 className = "domoAttr"> Attribute: {domo.attr}</h3>
+                <button onClick = {(e) => deleteDomo(e, props.triggerReload)} class = "domoId" id = "domo._id" value = {domo._id}>Delete</button>
             </div>
         );
     });
 
     return (
-        <div className = "domoList">
-            {domoNodes}
+        <div id = "main">
+            <div id = "filters">
+                <input onChange = {(e) => changeFilter(e.target.value, props.triggerReload)} name = "filters" type = "radio" id = "filterName" value = "name"/>
+                <label for = "filterName">Name</label>
+                <input onChange = {(e) => changeFilter(e.target.value, props.triggerReload)} type = "radio" name = "filters" id = "filterAge" value = "age"/>
+                <label for = "filterAge">Age</label>
+                <input onChange = {(e) => changeFilter(e.target.value, props.triggerReload)} type = "radio" name = "filters" id = "filterAttr" value = "attr"/>
+                <label for = "filterAttr">Attr</label>
+            </div>
+            <div className = "domoList">
+                {domoNodes}
+            </div>
         </div>
     );
 };
